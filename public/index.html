@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conflict Mediator Chat</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section id="setupCard" class="card">
+        <h1>Conflict Mediator Chat</h1>
+        <p class="subtitle">Two users, one room, AI-powered mediation.</p>
+
+        <label>Name</label>
+        <input id="usernameInput" placeholder="Your name" />
+
+        <label>Create room: problem (required)</label>
+        <textarea id="problemInput" rows="3" placeholder="Describe the disagreement..."></textarea>
+
+        <label>Create room: context (optional)</label>
+        <textarea id="contextInput" rows="3" placeholder="Any background details..."></textarea>
+
+        <button id="createBtn">Create New Group Chat</button>
+
+        <div class="divider">OR</div>
+
+        <label>Join existing room</label>
+        <input id="roomCodeInput" placeholder="Enter room code" />
+        <button id="joinBtn" class="secondary">Join Group Chat</button>
+      </section>
+
+      <section id="chatCard" class="card hidden">
+        <div class="chatHeader">
+          <div>
+            <h2>Shared Chat Room</h2>
+            <p id="roomLabel"></p>
+            <p id="problemLabel" class="small"></p>
+            <p id="contextLabel" class="small"></p>
+          </div>
+        </div>
+
+        <div id="messages" class="messages"></div>
+
+        <form id="messageForm" class="messageForm">
+          <input id="messageInput" placeholder="Type your message..." autocomplete="off" />
+          <button type="submit">Send</button>
+        </form>
+
+        <button id="mediateBtn" class="mediate">Get AI Mediation Feedback</button>
+        <pre id="feedbackBox" class="feedback hidden"></pre>
+      </section>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

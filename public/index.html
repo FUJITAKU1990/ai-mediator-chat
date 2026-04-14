@@ -8,12 +8,44 @@
   </head>
   <body>
     <main class="container">
-      <section id="setupCard" class="card">
+      <section id="authCard" class="card">
+        <h1>Conflict Mediator Chat</h1>
+        <p class="subtitle">Sign in with email to create or join a room.</p>
+        <p id="authError" class="authError hidden" role="alert"></p>
+        <label for="authEmail">Email</label>
+        <input
+          id="authEmail"
+          type="email"
+          autocomplete="username"
+          placeholder="you@example.com"
+        />
+
+        <label for="authPassword">Password</label>
+        <input
+          id="authPassword"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Your password"
+        />
+
+        <button type="button" id="signInBtn">Sign in</button>
+        <button type="button" id="signUpBtn" class="secondary">Create account</button>
+      </section>
+
+      <section id="setupCard" class="card hidden">
+        <div class="sessionBar">
+          <span id="sessionEmail" class="sessionEmail"></span>
+          <button type="button" class="secondary myStatsBtn">All-time stats</button>
+          <button type="button" class="secondary sessionLogout" data-action="logout">
+            Log out
+          </button>
+        </div>
+
         <h1>Conflict Mediator Chat</h1>
         <p class="subtitle">Two users, one room, AI-powered mediation.</p>
 
-        <label>Name</label>
-        <input id="usernameInput" placeholder="Your name" />
+        <label>Display name</label>
+        <input id="usernameInput" placeholder="Your name in the chat" maxlength="40" />
 
         <label>Create room: problem (required)</label>
         <textarea id="problemInput" rows="3" placeholder="Describe the disagreement..."></textarea>
@@ -31,12 +63,35 @@
       </section>
 
       <section id="chatCard" class="card hidden">
+        <div class="sessionBar">
+          <span id="sessionEmailChat" class="sessionEmail"></span>
+          <button type="button" class="secondary chatStatsBtn" title="Reactions on your messages in this room">
+            This chat
+          </button>
+          <button type="button" class="secondary myStatsBtn" title="All-time totals (saved in account)">
+            All-time stats
+          </button>
+          <button type="button" class="secondary leaveRoomBtn">Leave room</button>
+          <button type="button" class="secondary sessionLogout" data-action="logout">
+            Log out
+          </button>
+        </div>
         <div class="chatHeader">
           <div>
             <h2>Shared Chat Room</h2>
             <p id="roomLabel"></p>
             <p id="problemLabel" class="small"></p>
             <p id="contextLabel" class="small"></p>
+            <div class="modeRow" role="group" aria-label="Mediation style">
+              <span class="modeLabel">AI style:</span>
+              <button type="button" id="modeConciliatory" class="modeBtn modeBtn-active">
+                Conciliatory
+              </button>
+              <button type="button" id="modeDebate" class="modeBtn">Debate</button>
+            </div>
+            <p class="modeHint small">
+              Conciliatory looks for common ground; Debate highlights flawed reasoning.
+            </p>
           </div>
         </div>
 
@@ -50,9 +105,27 @@
         <button id="mediateBtn" class="mediate">Get AI Mediation Feedback</button>
         <pre id="feedbackBox" class="feedback hidden"></pre>
       </section>
+
+      <div id="statsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="statsModalTitle">
+        <div class="modalBackdrop" id="statsModalBackdrop"></div>
+        <div class="modalPanel card">
+          <div class="statsModalTabs" role="tablist" aria-label="Stats scope">
+            <button type="button" class="statsTab" role="tab" id="statsTabChat" data-stats-tab="chat" aria-selected="false">
+              This chat
+            </button>
+            <button type="button" class="statsTab" role="tab" id="statsTabAlltime" data-stats-tab="alltime" aria-selected="false">
+              All time
+            </button>
+          </div>
+          <h2 id="statsModalTitle">Your reaction totals</h2>
+          <p id="statsModalHint" class="small statsModalHint"></p>
+          <div id="statsModalBody" class="statsModalBody">Loading…</div>
+          <button type="button" id="statsModalClose" class="secondary">Close</button>
+        </div>
+      </div>
     </main>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
   </body>
 </html>
